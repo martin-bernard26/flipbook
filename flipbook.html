@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Book Example</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRysRaPu00lnAyd-hsoXxurklvHVloPNZt7Lw&s');
+      background-repeat:no-repeat;
+      background-size:cover;
+    }
+
+    .ebook {
+      width: 80%;
+      max-width: 1000px;
+      height: 80vh;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .page {
+      display: none;
+      padding: 20px;
+      height: 100%;
+      overflow-y: auto;
+      position:relative;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      max-width: 600px;
+      margin-top: 10px;
+    }
+
+    .controls button {
+      padding: 10px 20px;
+      font-size: 16px;
+      
+    }
+    .bagian1{
+      font-family:Arial;
+      text-align:justify;
+      font-size: 20px;
+      border:2px solid black;
+      margin:2px;
+      padding:2px;
+      background-color:white;
+      color:black;
+      border-radius:5px;
+      box-shadow:2px 2px 2px gray;
+    }
+    #page2{
+      background-color:orange;
+    }
+    .judul{
+      color:green;
+      text-shadow:2px 2px 2px black;
+      animation-name:animasi1;
+      animation-duration:3s;
+      animation-direction:alternate;
+      animation-iteration-count: infinite;
+    }
+    @keyframes animasi1{
+      0%{text-shadow:2px 2px 2px black;}
+      100%{text-shadow:2px 2px 2px yellow;}
+    }
+    #urutan li{
+      font-family:'comic sans ms';
+      font-size:30px;
+      margin:2px;
+    }
+    #page3{
+      position:relative;
+      background-color:pink;
+    }
+    #gambar{
+      position:absolute;
+      left:300px;
+      top:150px;
+      border:3px solid black;
+      box-shadow:-3px -3px 3px 3px red;
+      animation-name:animasi2;
+      animation-duration:2s;
+      animation-direction:alternate;
+      animation-iteration-count: infinite;
+    }
+    @keyframes animasi2{
+      0%{box-shadow:-3px -3px 3px 3px red;}
+      100%{box-shadow:3px 3px 3px 3px greenyellow;}
+    }
+    #page1{
+      background-color:lightgreen;
+    }
+    .ukuran{
+      font-family:"Bodoni MT Black";
+      font-size:30px;
+      font-weight:bold;
+      background-color:gray;
+      border-radius:5px;
+      padding:5px;
+      color:red;
+      margin-bottom:50px;
+    }
+    .ringkasan, .kegunaan{
+      font-size:20px;
+      font-weight:bold;
+      border:2px solid black;
+      margin-left:10px;
+      border-radius:5px;
+      padding:5px;
+      background-color:cyan;
+    }
+    .fungsi{
+      font-family:"Bodoni MT Black";
+      font-size:30px;
+      color:magenta;
+      margin-left:10px;
+      transform:translate(0px);
+      animation-name:animasi3;
+      animation-duration:5s;
+      animation-direction:alternate;
+      animation-iteration-count:infinite;
+    }
+    @keyframes animasi3{
+      0%{transform:translate(0px)}
+      100%{transform:translate(100px)}
+    }
+    .kegunaan{
+      font-family:"comic sans ms";
+      font-size:20px;
+      background-color:yellow;
+    }
+    #page9{
+      position:relative
+    }
+    #gambaran{
+      width:300px;
+      height:300px;
+      position:absolute;
+      left:100px;
+      top:100px;
+    }
+    .gradient-text {
+      position:absolute;
+      font-size: 4rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff007f, #ffb200, #00b8ff, #00ff87);
+      background-size: 400% 400%;
+      color: transparent;
+      background-clip: text;
+      animation: gradientAnimation 4s ease infinite;
+      left:350px;
+      top:200px;
+    }
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .transform-button {
+      padding: 15px 40px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #e74c3c;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      outline: none;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .transform-button:hover {
+      transform: scale(1.1) rotate(10deg);
+      background-color: #f39c12;
+    }
+    .wave-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: black;
+
+      display: inline-block;
+      animation: wave 1.5s ease-in-out infinite;
+    }
+
+    @keyframes wave {
+      0% {
+        transform: translateY(0);
+      }
+      25% {
+        transform: translateY(-10px);
+      }
+      50% {
+        transform: translateY(0);
+      }
+      75% {
+        transform: translateY(10px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+    .halaman{
+      position:absolute;
+      left:800px;
+      top:0px;
+    }
+    .rainbow-text {
+      font-family:broadway;
+      font-size: 60px;
+      font-weight: bold;
+      color:transparent;
+      background: linear-gradient(90deg, 
+        red, orange, yellow, green, cyan, blue, violet);
+      background-clip: text;
+      animation: rainbow 3s ease-in-out infinite;
+      animation-direction:alternate;
+    }
+
+    @keyframes rainbow {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 600px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="rainbow-text">E-book Bacaan</div>
+  <div class="ebook">
+    <div class="page active" id="page1">
+      <div style="font-family:'bauhaus 93';text-align:center;font-size:50px;color:green;text-shadow:2px 2px 2px red">Sistem Pencernaan Manusia</div>
+      <div style="text-align:center"><embed src="https://media1.tenor.com/m/O3e45QbCQkUAAAAd/digestive-system-parts.gif"></div>
+      <div style="text-align:center;font-family:'comic sans ms';font-size:20px">Pengetahuan dasar tentang organ-organ tubuh manusi beserta fungsinya</div>
+      <!-- Add more content here -->
+    </div>
+    <div class="page" id="page2">
+      <div class="judul" style="font-family:broadway;font-size:30px">Pendahuluan</div>
+      <div class="bagian1">Sistem pencernaan manusia adalah rangkaian organ yang bekerja bersama untuk mencerna makanan, 
+        menyerap nutrisi, dan membuang sisa-sisa yang tidak diperlukan tubuh. 
+        Sistem ini berfungsi untuk mengubah makanan yang kita konsumsi menjadi molekul-molekul yang lebih kecil, 
+        yang dapat diserap oleh tubuh untuk mendukung berbagai fungsi biologis. Proses ini melibatkan 
+        berbagai organ, mulai dari mulut hingga anus, dan melibatkan berbagai enzim dan cairan pencernaan 
+        untuk membantu proses tersebut.</div>
+      <div class="bagian1">Sistem pencernaan manusia adalah rangkaian organ yang 
+        bekerja bersama untuk mencerna makanan, Sistem pencernaan manusia terdiri dari saluran pencernaan dan 
+        organ-organ tambahan, seperti pankreas, hati, dan kantung empedu, yang membantu dalam proses pencernaan dan penyerapan. 
+        Saluran pencernaan manusia mencakup mulut, kerongkongan, lambung, usus halus, usus besar, dan anus. 
+        Setiap organ dalam sistem pencernaan memiliki peran spesifik yang mendukung penguraian makanan menjadi 
+        bentuk yang lebih sederhana, sehingga nutrisi dapat diserap dengan efisien oleh tubuh.</div>
+      <div  class="bagian1">Proses pencernaan dimulai dari proses mekanik dan kimiawi di mulut, kemudian dilanjutkan ke lambung 
+        untuk penguraian lebih lanjut, dan akhirnya di usus halus, di mana sebagian besar penyerapan 
+        nutrisi terjadi. Setelah itu, sisa makanan yang tidak tercerna akan diteruskan 
+        ke usus besar untuk diproses menjadi feses yang akan dibuang melalui anus.</div>
+      <h2 class="wave-text halaman">halaman 1</h2>
+      <!-- Add more content here -->
+    </div>
+    <div class="page" id="page3">
+      <img id="gambar" src="https://awsimages.detik.net.id/community/media/visual/2022/02/24/sistem-pencernaan-makanan_169.png?w=600">
+      <div class="judul" style="font-weight:bold;font-size:40px;">Organ-organ Sistem Pencernaan</div>
+      <p style="font-size:20px;">Berikut adalah organ-organ utama dalam sistem pencernaan manusia beserta penjelasan fungsinya masing-masing:</p>
+      <div>
+        <ol id="urutan">
+          <li>Mulut</li>
+          <li>Kerongkongan</li>
+          <li>Lambung</li>
+          <li>Usus Halus</li>
+          <li>Usus Besar</li>
+          <li>Anus</li>
+        </ol>
+      </div>
+      <h2 class="wave-text halaman">halaman 2</h2>
+      <!-- Add more content here -->
+    </div>
+    <!-- Tambahkan halaman tambahan jika perlu -->
+    <div class="page" id="page4">
+      <div class="judul ukuran">Rongga Mulut</div>
+      <div style="display:flex;margin-top:10px;">
+        <image src="https://cdn.utakatikotak.com/20171125/20171125_110237mulut-anatomi.jpg"></image>
+        <div>
+        <div class="ringkasan">
+          Organ mulut merupakan tempat awal proses pencernaan, baik secara mekanis maupun kimiawi.
+        </div>
+        <div class="fungsi">Fungsi</div>
+        <div class="kegunaan">
+          Secara keseluruhan, fungsi mulut adalah sebagai pintu masuk makanan ke dalam 
+          tubuh serta memulai proses pencernaan. Pencernaan di mulut sangat penting untuk 
+          mengubah makanan menjadi partikel yang lebih kecil, membuatnya lebih mudah 
+          dicerna di lambung dan usus.
+        </div>
+        </div>
+      </div>
+      <h2 class="wave-text halaman">halaman 3</h2>
+    </div>
+    <div class="page" id="page5">
+      <div class="judul ukuran">Kerongkongan</div>
+      <div style="display:flex;margin-top:10px;">
+        <image src="https://www.sekolahan.co.id/wp-content/uploads/2019/01/Kerongkongan-Esofagus.jpg" width="350" height="250"></image>
+        <div>
+        <div class="ringkasan">
+          Kerongkongan, atau disebut juga esofagus, adalah organ berbentuk tabung yang menghubungkan mulut dengan lambung. Panjangnya sekitar 25 cm pada orang dewasa dan terletak di belakang trakea (saluran napas).
+        </div>
+        <div class="fungsi">Fungsi</div>
+        <div class="kegunaan">
+          Secara keseluruhan, fungsi utama kerongkongan adalah mengangkut makanan 
+          dari mulut ke lambung melalui gerakan peristaltik yang efisien. Kerongkongan 
+          juga memainkan peran penting dalam mencegah refluks asam lambung yang dapat merusak 
+          jaringan kerongkongan.
+        </div>
+        </div>
+      </div>
+      <h2 class="wave-text halaman">halaman 4</h2>
+    </div>
+    <div class="page" id="page6">
+      <div class="judul ukuran">Lambung</div>
+      <div style="display:flex;margin-top:10px;">
+        <image src="https://wargamasyarakat.org/wp-content/uploads/2022/03/fungsi-lambung.jpg" width="350" height="250"></image>
+        <div>
+        <div class="ringkasan">
+          Lambung, atau disebut juga sebagai perut, adalah organ pencernaan berotot yang terletak di antara kerongkongan dan usus halus. 
+        </div>
+        <div class="fungsi">Fungsi</div>
+        <div class="kegunaan">
+          Secara keseluruhan, lambung berperan penting dalam mencerna makanan
+           dan mempersiapkannya untuk proses pencernaan lebih lanjut di usus halus. 
+           Lambung tidak hanya menghancurkan dan mencampur makanan tetapi juga memulai 
+           pemecahan protein serta membunuh patogen melalui asam 
+           lambung, berfungsi sebagai pertahanan tubuh yang penting dalam sistem 
+           pencernaan.
+        </div>
+        </div>
+      </div>
+      <h2 class="wave-text halaman">halaman 5</h2>
+    </div>
+    <div class="page" id="page7">
+      <div class="judul ukuran">Usus Halus</div>
+      <div style="display:flex;margin-top:10px;">
+        <image src="https://asset.kompas.com/crops/NReJXkB7wrwC_dV3kPSYIfWGRfE=/0x88:600x488/750x500/data/photo/2022/02/18/620f1984167eb.png" width="350" height="250"></image>
+        <div>
+        <div class="ringkasan">
+          Usus halus adalah organ panjang dan berkelok yang berperan penting dalam proses pencernaan dan penyerapan nutrisi. Usus halus terletak antara lambung dan usus besar, dan memiliki panjang sekitar 6 meter pada orang dewasa. 
+        </div>
+        <div class="fungsi">Fungsi</div>
+        <div class="kegunaan">
+          Secara keseluruhan, fungsi utama usus halus adalah untuk menyelesaikan proses 
+          pencernaan makanan dan menyerap sebagian besar nutrisi yang diperlukan tubuh. 
+          Setiap bagian dari usus halus, mulai dari duodenum hingga ileum, memiliki peran 
+          khusus dalam memastikan nutrisi dari makanan diserap dengan efisien, sehingga 
+          tubuh dapat memanfaatkannya untuk energi, pertumbuhan, dan perbaikan sel.
+        </div>
+        </div>
+      </div>
+      <h2 class="wave-text halaman">halaman 6</h2>
+    </div>
+    <div class="page" id="page7">
+      <div class="judul ukuran">Usus Besar</div>
+      <div style="display:flex;margin-top:10px;">
+        <image src="https://kependidikan.com/wp-content/uploads/2019/03/usus-besar.png" width="350" height="250"></image>
+        <div>
+        <div class="ringkasan">
+          Usus besar (colon) adalah bagian terakhir dari sistem pencernaan manusia yang berfungsi untuk menyerap air, elektrolit, dan beberapa vitamin dari sisa-sisa pencernaan makanan yang tidak dicerna di usus halus. Usus besar juga berperan dalam pembentukan dan pengeluaran feses. Organ ini lebih pendek daripada usus halus, namun lebih besar dalam diameter.
+        </div>
+        <div class="fungsi">Fungsi</div>
+        <div class="kegunaan">
+          Secara keseluruhan, usus besar berperan penting dalam proses pencernaan 
+          dengan menyerap air dan elektrolit, menghasilkan feses, serta mendukung 
+          keseimbangan mikroflora yang mendukung pencernaan dan sistem imun tubuh.
+        </div>
+        </div>
+      </div>
+      <h2 class="wave-text halaman">halaman 7</h2>
+    </div>
+    <div class="page" id="page8">
+      <div class="judul ukuran">Anus</div>
+      <div style="display:flex;margin-top:10px;">
+        <image src="https://materikimia.com/wp-content/uploads/2021/07/Gambar-Anatomi-Rektum-Manusia.jpg" width="350" height="250"></image>
+        <div>
+        <div class="ringkasan">
+          Anus adalah bagian akhir dari sistem pencernaan yang berfungsi untuk mengeluarkan feses (kotoran) dari tubuh. Anus terletak di bagian bawah tubuh, di ujung rektum, dan merupakan saluran yang menghubungkan usus besar dengan dunia luar.
+        </div>
+        <div class="fungsi">Fungsi</div>
+        <div class="kegunaan">
+          Secara keseluruhan, anus adalah organ yang sangat penting dalam sistem 
+          pencernaan, berperan dalam pengeluaran feses yang telah diproses oleh tubuh dan
+           memberikan kontrol terhadap buang air besar. Fungsi kontrol yang diberikan 
+           oleh anus memungkinkan tubuh untuk mempertahankan keseimbangan dan kenyamanan 
+           saat proses pembuangan limbah berlangsung.
+        </div>
+        </div>
+      </div>
+      <h2 class="wave-text halaman">halaman 8</h2>
+    </div>
+    <div class="page" id="page9">
+      
+        <div><embed id="gambaran" src="https://media.tenor.com/JEnHcXbt62UAAAAM/gi.gif"></div>
+        <div class="gradient-text">Terima Kasih</div>
+     
+      
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="transform-button" onclick="prevPage()">Halaman Sebelumnya</button>
+    <button class="transform-button" onclick="nextPage()">Halaman Selanjutnya</button>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = document.querySelectorAll('.page').length;
+
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach((el, index) => {
+        el.classList.toggle('active', index === page - 1);
+      });
+    }
+
+    function nextPage() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    }
+  </script>
+</body>
+</html>
